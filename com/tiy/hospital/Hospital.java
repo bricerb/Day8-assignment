@@ -1,5 +1,6 @@
 package com.tiy.hospital;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -8,6 +9,7 @@ import java.util.ArrayList;
 public class Hospital {
     private String name = "WebMD";
     ArrayList<HospitalDoctor> doctorsIndex = new ArrayList<HospitalDoctor>();
+    ArrayList<Patient> patientIndex = new ArrayList<Patient>();
 
     public String getName() {
         return name;
@@ -21,7 +23,11 @@ public class Hospital {
         doctorsIndex.add(myDoc);
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public ArrayList<Patient> getPatientIndex() {
+        return patientIndex;
+    }
+
+    public void addPatientIndex(Patient patient) {
+        patientIndex.add(patient);
     }
 }

@@ -16,9 +16,13 @@ public class HospitalRunner {
 //        HospitalDoctor fourthDoc = new Pulmonologist("John", "Dorian", "Scrubs R' Us");
 
         while (true) {
-            System.out.println("Welcome to " + myHospital.getName() + " Hospital.");
+            System.out.println("\nWelcome to " + myHospital.getName() + " Hospital.");
+            System.out.println("Type 0 to leave.");
             System.out.println("\nhow many doctors would you like to have available today?");
             int numDoctors = Integer.valueOf(inputScanner.nextLine());
+            if (numDoctors == 0) {
+                break;
+            }
             for (int currentDoctor = 0; currentDoctor < numDoctors; currentDoctor++) {
                 System.out.println("What is this Doctor's first name?");
                 String firstDoc = inputScanner.nextLine();
@@ -47,71 +51,79 @@ public class HospitalRunner {
                 }
             }
 
+            System.out.println("And how many patients are here for treatment?");
+            int numPatients = Integer.valueOf(inputScanner.nextLine());
+            for (int currPatient = 0; currPatient <numPatients; currPatient++) {
 
-            System.out.println("\nCreate a new Patient. ");
-            System.out.println("What's your patient's first name?");
-            String firstName = inputScanner.nextLine();
-            System.out.println("What's your patient's last name?");
-            String lastName = inputScanner.nextLine();
-            System.out.println("What symptom does your patient have?");
-            System.out.println("\n1. Difficulty Breathing");
-            System.out.println("2. Severe Chronic Migraines");
-            System.out.println("3. Consistent Sore Throat");
-            System.out.println("4. All of the above");
-            int symptom = Integer.valueOf(inputScanner.nextLine());
+                System.out.println("\nCreate a new Patient. ");
+                System.out.println("What's your patient's first name?");
+                String firstName = inputScanner.nextLine();
+                System.out.println("What's your patient's last name?");
+                String lastName = inputScanner.nextLine();
+                System.out.println("What symptom does your patient have?");
+                System.out.println("\n1. Difficulty Breathing");
+                System.out.println("2. Severe Chronic Migraines");
+                System.out.println("3. Consistent Sore Throat");
+                System.out.println("4. All of the above");
+                int symptom = Integer.valueOf(inputScanner.nextLine());
 
 
-            Patient currentPatient = new Patient(firstName, lastName);
-            currentPatient.setSick(symptom);
+                Patient currentPatient = new Patient(firstName, lastName);
+                currentPatient.setSick(symptom);
+                myHospital.addPatientIndex(currentPatient);
+            }
 
-            for (HospitalDoctor myDoc : myHospital.getDoctorsIndex()) {
-                if (myDoc instanceof GeneralPractioner) {
-                    System.out.println();
-                    boolean success = ((GeneralPractioner) myDoc).operate(currentPatient);
-                    System.out.println("Oh no, you have a Cold!");
-                    if (success) {
-                        System.out.println("Here's some Tylenol. Go drink some Java and you'll be cured.");
-                    } else {
-                        System.out.println("We don't have a doctor that can treat you! \nYou'll have to take some Tylenol or something. Sorry.");
+            for (Patient myPatient : myHospital.getPatientIndex()) {
+
+                for (HospitalDoctor myDoc : myHospital.getDoctorsIndex()) {
+                    if (myDoc instanceof GeneralPractioner) {
+                        System.out.println();
+                        boolean success = ((GeneralPractioner) myDoc).operate(myPatient);
+                        System.out.println("Oh no, you have a Cold!");
+                        if (success) {
+                            System.out.println("Here's some Tylenol. Go drink some Java and you'll be cured.");
+                        } else {
+                            System.out.println("We don't have a doctor that can treat you! \nYou'll have to take some Tylenol or something. Sorry.");
+                        }
                     }
-                }
 
-                if (myDoc instanceof SurgicalOncologist) {
-                    System.out.println();
-                    System.out.println("Oh no! You have Brain Cancer!");
-                    boolean success = ((SurgicalOncologist) myDoc).operate(currentPatient);
-                    if (success) {
-                        System.out.println("Successful operation!");
-                        System.out.println(myDoc.getFirstName() + " " + myDoc.getLastName() + " from " + myDoc.getCollege() + " cured Brain Cancer");
-                    } else {
-                        System.out.println("\nBrice Blanch from Iron Yard miraculously appears and cures your cancer! \nThat's Week2 in the Iron Yard.");
+                    if (myDoc instanceof SurgicalOncologist) {
+                        System.out.println();
+                        System.out.println("Oh no! You have Brain Cancer!");
+                        boolean success = ((SurgicalOncologist) myDoc).operate(myPatient);
+                        if (success) {
+                            System.out.println("Successful operation!");
+                            System.out.println(myDoc.getFirstName() + " " + myDoc.getLastName() + " from " + myDoc.getCollege() + " cured Brain Cancer");
+                        } else {
+                            System.out.println("\nBrice Blanch from Iron Yard miraculously appears and cures your cancer! \nThat's Week2 in the Iron Yard.");
+                        }
                     }
-                }
 
-                if (myDoc instanceof EarNoseThroat) {
-                    System.out.println();
-                    boolean success = ((EarNoseThroat) myDoc).operate(currentPatient);
-                    System.out.println("Oh no! You have Strep Throat! ");
-                    System.out.println(myDoc.getFirstName() + " " + myDoc.getLastName() + " from " + myDoc.getCollege() + " is here to treat Strep Throat.");
-                    if (success) {
-                        System.out.println("Successful operation!");
-                    } else {
-                        System.out.println("Operation failed!!!");
+                    if (myDoc instanceof EarNoseThroat) {
+                        System.out.println();
+                        boolean success = ((EarNoseThroat) myDoc).operate(myPatient);
+                        System.out.println("Oh no! You have Strep Throat! ");
+                        System.out.println(myDoc.getFirstName() + " " + myDoc.getLastName() + " from " + myDoc.getCollege() + " is here to treat Strep Throat.");
+                        if (success) {
+                            System.out.println("Successful operation!");
+                        } else {
+                            System.out.println("Operation failed!!!");
+                        }
                     }
-                }
 
-                if (myDoc instanceof Pulmonologist) {
-                    System.out.println();
-                    boolean success = ((Pulmonologist) myDoc).operate(currentPatient);
-                    System.out.println("Oh no! You have Lung Cancer!");
-                    if (success) {
-                        System.out.println("Successful operation!");
-                        System.out.println(myDoc.getFirstName() + " " + myDoc.getLastName() + " from " + myDoc.getCollege() + " cured Lung Cancer");
-                    } else {
-                        System.out.println("Operation failed!!!");
+                    if (myDoc instanceof Pulmonologist) {
+                        System.out.println();
+                        boolean success = ((Pulmonologist) myDoc).operate(myPatient);
+                        System.out.println("Oh no! You have Lung Cancer!");
+                        if (success) {
+                            System.out.println("Successful operation!");
+                            System.out.println(myDoc.getFirstName() + " " + myDoc.getLastName() + " from " + myDoc.getCollege() + " cured Lung Cancer");
+                        } else {
+                            System.out.println("Operation failed!!!");
+                        }
                     }
+                    break;
                 }
-                break;
             }
         }
     }
