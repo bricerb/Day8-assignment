@@ -7,15 +7,18 @@ import java.util.ArrayList;
  */
 public class Hospital {
     private String name = "WebMD";
-    HospitalDoctor entDoc;
-    HospitalDoctor pulmDoc;
-    HospitalDoctor oncDoc;
-    HospitalDoctor genDoc;
-
-
+    ArrayList<HospitalDoctor> doctorsIndex = new ArrayList<HospitalDoctor>();
 
     public String getName() {
         return name;
+    }
+
+    public ArrayList<HospitalDoctor> getDoctorsIndex() {
+        return doctorsIndex;
+    }
+
+    public void addDoctorsIndex(HospitalDoctor myDoc) {
+        doctorsIndex.add(myDoc);
     }
 
     public void setName(String name) {
